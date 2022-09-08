@@ -1,6 +1,6 @@
 server:
   AppVersion: 1.0.0
-  Port: :5000
+  Port: :5001
   PprofPort: :5555
   Mode: Development
   JwtSecretKey: secretkey
@@ -17,9 +17,9 @@ server:
   Time: 120
 
 Smtp:
-  Host: Host.com
-  Port: 123
-  User: User@gmail.com
+  Host: smtp.gmail.com
+  Port: 465
+  User: ivanivanovf321@gmail.com
   Password: Password
 
 rabbitmq:

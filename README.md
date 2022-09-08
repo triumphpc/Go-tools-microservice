@@ -54,3 +54,14 @@ http://localhost:3000
 ### RabbitMQ UI:
 
 http://localhost:15672
+
+
+### Email example
+```json
+{
+"emailId" : "ebae32c84f744cfb9f94a100faca18d1",
+"to" : ["triumph.job@gmail.com"],
+"body" : "Body test",
+"subject" : "Subject test"
+}
+```

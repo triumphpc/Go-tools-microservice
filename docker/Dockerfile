@@ -13,6 +13,6 @@ RUN go mod download
 
 RUN go get github.com/githubnemo/CompileDaemon
 
-EXPOSE 5000
+EXPOSE 5001
 
 ENTRYPOINT CompileDaemon --build="go build cmd/email_service/main.go" --command=./main
