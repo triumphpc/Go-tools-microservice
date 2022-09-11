@@ -21,10 +21,34 @@ type Config struct {
 	AWS      AWS
 	Jaeger   Jaeger
 	Smtp     Smtp
+
+	MassTransitServer  MassTransitServerConfig
+	MassTransitMetrics Metrics
+	RabbitMT           RabbitMT
 }
 
 // Server config struct
 type ServerConfig struct {
+	AppVersion        string
+	Port              string
+	PprofPort         string
+	Mode              string
+	JwtSecretKey      string
+	CookieName        string
+	ReadTimeout       time.Duration
+	WriteTimeout      time.Duration
+	SSL               bool
+	CtxDefaultTimeout time.Duration
+	CSRF              bool
+	Debug             bool
+	MaxConnectionIdle time.Duration
+	Timeout           time.Duration
+	MaxConnectionAge  time.Duration
+	Time              time.Duration
+}
+
+// MassTransitServerConfig config struct
+type MassTransitServerConfig struct {
 	AppVersion        string
 	Port              string
 	PprofPort         string
@@ -62,6 +86,22 @@ type RabbitMQ struct {
 	RoutingKey     string
 	ConsumerTag    string
 	WorkerPoolSize int
+}
+
+// RabbitMT - mass transit emulation
+type RabbitMT struct {
+	Host           string
+	Port           string
+	User           string
+	Password       string
+	WorkExchange   string
+	RepeatExchange string
+	DeadExchange   string
+	WorkQueue      string
+	RepeatQueue    string
+	DeadQueue      string
+	WorkerPoolSize int
+	RoutingKey     string
 }
 
 // Logger config

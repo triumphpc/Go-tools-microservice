@@ -5,17 +5,19 @@ import (
 	"os"
 
 	"github.com/AleksK1NG/email-microservice/config"
-	"github.com/AleksK1NG/email-microservice/internal/server"
+	"github.com/AleksK1NG/email-microservice/internal/mass_transit_server"
 	"github.com/AleksK1NG/email-microservice/pkg/jaeger"
 	"github.com/AleksK1NG/email-microservice/pkg/logger"
-	"github.com/AleksK1NG/email-microservice/pkg/mailer"
 	"github.com/AleksK1NG/email-microservice/pkg/postgres"
 	"github.com/AleksK1NG/email-microservice/pkg/rabbitmq"
 	"github.com/opentracing/opentracing-go"
 )
 
+// Server for mass transit messages
+// gRPC service -> RabbitMQ -> Goroutine parallel patterns  -> pg
+
 func main() {
-	log.Println("Starting server")
+	log.Println("Starting mass transit server")
 
 	configPath := config.GetConfigPath(os.Getenv("config"))
 	cfg, err := config.GetConfig(configPath)
@@ -27,12 +29,14 @@ func main() {
 	appLogger.InitLogger()
 	appLogger.Infof(
 		"AppVersion: %s, LogLevel: %s, Mode: %s, SSL: %v",
-		cfg.Server.AppVersion,
+		cfg.MassTransitServer.AppVersion,
 		cfg.Logger.Level,
-		cfg.Server.Mode,
-		cfg.Server.SSL,
+		cfg.MassTransitServer.Mode,
+		cfg.MassTransitServer.SSL,
 	)
-	appLogger.Infof("Success parsed config: %#v", cfg.Server.AppVersion)
+	appLogger.Infof("Success parsed config: %#v", cfg.MassTransitServer.AppVersion)
+	appLogger.Infof("TEST: %#v", cfg.RabbitMT.RepeatExchange)
+	appLogger.Infof("TEST: %#v", cfg.RabbitMQ.Exchange)
 
 	amqpConn, err := rabbitmq.NewRabbitMQConn(cfg)
 	if err != nil {
@@ -58,10 +62,7 @@ func main() {
 	defer closer.Close()
 	appLogger.Info("Opentracing connected")
 
-	mailDialer := mailer.NewMailDialer(cfg)
-	appLogger.Info("Mail dialer connected")
-
-	s := server.NewEmailsServer(amqpConn, appLogger, cfg, mailDialer, psqlDB)
+	s := mass_transit_server.NewServer(amqpConn, appLogger, cfg, psqlDB)
 
 	appLogger.Fatal(s.Run())
 }

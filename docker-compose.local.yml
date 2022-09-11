@@ -37,6 +37,8 @@ services:
       - '5672:5672'
       # HTTP management UI
       - '15672:15672'
+      # Prometheus metrics
+      - '15692:15692'
 
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
@@ -62,6 +64,35 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - '9090:9090'
+    networks:
+      - microservice_network
+    depends_on:
+      - cadvisor
+
+  # cAdvisor (Container Advisor) provides container users an understanding
+  # of the resource usage and performance characteristics of their running containers.
+  # https://github.com/google/cadvisor
+  # https://techwithcloud.com/2021/06/02/rabbitmq-monitoring-using-prometheus-grafana/
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis
+    networks:
+      - microservice_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - microservice_network
 

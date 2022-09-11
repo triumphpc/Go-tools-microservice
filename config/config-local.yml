@@ -16,11 +16,29 @@ server:
   MaxConnectionAge: 5
   Time: 120
 
+masstransitserver:
+  AppVersion: 1.0.0
+  Port: :5001
+  PprofPort: :5555
+  Mode: Development
+  JwtSecretKey: secretkey
+  CookieName: jwt-token
+  ReadTimeout: 5
+  WriteTimeout: 5
+  SSL: true
+  CtxDefaultTimeout: 12
+  CSRF: true
+  Debug: false
+  MaxConnectionIdle: 5
+  Timeout: 15
+  MaxConnectionAge: 5
+  Time: 120
+
 Smtp:
-  Host: smtp.gmail.com
+  Host: smtp.yandex.ru
   Port: 465
-  User: ivanivanovf321@gmail.com
-  Password: Password
+  User: triumph.job@yandex.ru
+  Password: mqtdjmlwbvxjymyk
 
 rabbitmq:
   Host: localhost
@@ -33,6 +51,19 @@ rabbitmq:
   ConsumerTag: emails-consumer
   WorkerPoolSize: 24
 
+rabbitmt:
+  Host: localhost
+  Port: 5672
+  User: guest
+  Password: guest
+  WorkExchange: WorkExchange
+  RepeatExchange: RepeatExchange
+  DeadExchange: DeadExchange
+  WorkQueue: WorkQueue
+  RepeatQueue: RepeatQueue
+  DeadQueue: DeadQueue
+  RoutingKey: datarouting-key
+  WorkerPoolSize: 24
 
 logger:
   Development: true

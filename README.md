@@ -23,6 +23,8 @@
 * [Go-grpc-middleware](https://github.com/grpc-ecosystem/go-grpc-middleware) - interceptor chaining, auth, logging, retries and more
 * [Opentracing-go](https://github.com/opentracing/opentracing-go) - OpenTracing API for Go
 * [Prometheus-go-client](https://github.com/prometheus/client_golang) - Prometheus instrumentation library for Go applications
+* [Cadvisor for Container Metrics](https://prometheus.io/docs/guides/cadvisor/) - cAdvisor (short for container Advisor) analyzes and exposes resource usage and performance data from running containers
+* [Echo](https://github.com/labstack/echo) - High performance, minimalist Go web framework
 
 #### Recommendation for local development most comfortable usage:
     make local // run all containers
@@ -59,9 +61,10 @@ http://localhost:15672
 ### Email example
 ```json
 {
-"emailId" : "ebae32c84f744cfb9f94a100faca18d1",
-"to" : ["triumph.job@gmail.com"],
-"body" : "Body test",
-"subject" : "Subject test"
+  "emailId" : "ebae32c84f744cfb9f94a100faca18d1",
+  "to" : ["triumph.job@gmail.com"],
+  "body" : "Hello <b>Bob</b> and <i>Cora</i>!",
+  "subject" : "Subject Hello!", 
+  "from" : "triumph.job@yandex.ru"
 }
 ```

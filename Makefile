@@ -4,6 +4,9 @@
 run:
 	go run ./cmd/email_service/main.go
 
+run_mass:
+	go run ./cmd/mass_transit_service/main.go
+
 build:
 	go build ./cmd/email_service/main.go
 

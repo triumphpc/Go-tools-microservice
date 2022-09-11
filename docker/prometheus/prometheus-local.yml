@@ -14,3 +14,12 @@ scrape_configs:
   - job_name: 'email-microservice'
     static_configs:
       - targets: ['host.docker.internal:7070']
+
+  - job_name: 'rabbitmq'
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['host.docker.internal:15692']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['host.docker.internal:8080']
